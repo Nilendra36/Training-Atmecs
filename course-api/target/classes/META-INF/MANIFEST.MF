@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: Nilendra Mishra Course Project
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: nilendra.mishra
+Implementation-Vendor-Id: com.atmecs.springbootquickstart
+Build-Jdk: 1.8.0_181
+Implementation-URL: http://projects.spring.io/spring-boot/course-api/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
