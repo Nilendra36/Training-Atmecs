@@ -1,0 +1,52 @@
+package com.atmecs.springbootstarter.course;
+
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.atmecs.springbootstarter.topic.Topic;
+
+@RestController
+public class CourseController {
+	
+	@Autowired
+	private CourseService courseservice;
+	
+	@RequestMapping("topics/{id}/courses")
+	public List<Course> getList(@PathVariable String id){
+		return courseservice.getAllCourses(id);
+				}
+	
+	@RequestMapping("topics/{topicId}/courses/{id}")
+	public Optional<Course> getcourse(@PathVariable String id) {
+		return courseservice.getcourse(id);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST,value="topics/{topicId}/courses")
+	public void addcourse(@RequestBody Course course,@PathVariable String topicId) {
+		course.setTopic(new Topic(topicId,"",""));
+		courseservice.addcourse(course);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT,value="/topics/{topicId}/courses/{id}")
+	public void updatecourse(@PathVariable String id,@PathVariable String topicId,@RequestBody Course course) {
+		course.setTopic(new Topic(topicId,"", ""));
+		courseservice.updatecourse(id,course);
+	}
+	
+	@RequestMapping(value="topics/{topicId}/courses/{id}",method=RequestMethod.DELETE)
+	public void deletecourse(@PathVariable String id) {
+		courseservice.deletecourse(id);
+	}
+	
+	
+	
+
+}
