@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	
+<!-- <bean id="HandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/> -->
+	
+<!-- <bean name="/welcome.html" class="com.atmecs.hellocontroller.HelloController" /> -->
+<!-- The above line we need to write if we don't use @RequestMapping annotation -->
+<!-- Instead in order to write our program using annotation we have to add the below syntax in our xml file  -->
+	
+	<context:component-scan base-package="com.atmecs.hellocontroller"/>
+	<context:component-scan base-package="com.atmecs.employeeRegistrationcontroller"/>
+<!-- 	In order to store path variables into Map we have to add below syntax -->
+	<mvc:annotation-driven/>	
+	
+	<mvc:interceptors>
+	<mvc:interceptor>
+	<mvc:mapping path="/atmecsRegistrationForm.html"/>
+	<bean class="com.atmecs.employeeRegistrationcontroller.DayOfWeekBasedAccessInterceptor"/>
+	</mvc:interceptor>
+	<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	<property name="paramName" value="siteLanguage"></property>
+	</bean>
+	</mvc:interceptors>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	
+	<property name="prefix">
+	<value>/WEB-INF/</value>
+	</property>
+	
+	<property name="suffix">
+	<value>.jsp</value>
+	</property>
+	
+	</bean>
+	
+<!-- 	In order to use properties file we have to use the below bean -->
+	<bean id="messageSource"
+	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<property name="basename" value="/WEB-INF/employeemessages"></property>
+	</bean>
+	
+	<bean id="localeResolver"
+	class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+	<property name="defaultLocale" value="en"></property>
+	</bean>
+	
+	
+	
+</beans>
